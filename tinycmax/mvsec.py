@@ -119,10 +119,8 @@ class MvsecSequence:
         # start and end time
         if self.seq_len is not None:  # randomly-sliced sequence of seq_len
             start, end = self.t0, max(self.t0, self.tk - (self.seq_len + 1) * self.time_window)  # only full
-            if np.issubdtype(self.fs["events/t"], np.integer):
-                t_start = np.random.randint(start, max(start + 1, end))
-            elif np.issubdtype(self.fs["events/t"], np.floating):
-                t_start = np.random.uniform(start, end)
+            # t0/tk are always int64 microseconds (converted in __post_init__)
+            t_start = np.random.randint(int(start), max(int(start) + 1, int(end)))
             n_full_windows = self.seq_len
         else:  # full sequence
             t_start, t_end = self.t0, self.tk
