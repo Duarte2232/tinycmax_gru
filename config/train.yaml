@@ -18,3 +18,4 @@ defaults:
 
 stage: train
 name: ${stage}
+seed: 42

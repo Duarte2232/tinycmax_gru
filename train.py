@@ -12,8 +12,7 @@ def main(config):
     torch.set_float32_matmul_precision("high")
 
     # reproducibility
-    if config.trainer.deterministic:
-        seed_everything(42, workers=True)
+    seed_everything(config.seed, workers=True)
 
     # dataset + dataloader = lightning datamodule
     datamodule = instantiate(config.datamodule)
