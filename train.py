@@ -30,7 +30,8 @@ def main(config):
     # logger
     # NOTE: https://docs.wandb.ai/guides/app/features/panels/code/
     # stores code as an artifact but doesn't work that well yet
-    wandb.require("legacy-service")  # to have diff.patch stored
+    if config.logger is not None and "WandbLogger" in config.logger.get("_target_", ""):
+        wandb.require("legacy-service")  # to have diff.patch stored
     logger = instantiate(config.logger)
     if logger is not None:
         logger.log_hyperparams(OmegaConf.to_container(config, resolve=True, throw_on_missing=True))
