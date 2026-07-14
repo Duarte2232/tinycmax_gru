@@ -59,7 +59,7 @@ class Train(LightningModule):
             self.compiled_network = self.network
 
         # wandb model watching
-        if self.logger is not None and not self.compile_network:
+        if self.logger is not None and not self.compile_network and hasattr(self.logger, "watch"):
             self.logger.watch(self.network, log="all", log_freq=self.trainer.log_every_n_steps * 100)
 
     def shared_step(self, batch, batch_idx, stage):
